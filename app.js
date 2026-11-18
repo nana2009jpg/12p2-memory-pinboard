@@ -23,7 +23,8 @@ let typingTimer, revealTimer, phraseIndex = 0, isTyping = false, hasTyped = fals
 let currentMemberIndex = -1;
 let enteredPin = "";
 let sequenceTimers = [];
-let availableGifts = loadGiftPool();
+let giftAssignments = loadGiftAssignments();
+let availableGifts = deriveAvailableGifts();
 let wheelRotation = 0;
 
 function typeIntro() {
@@ -92,8 +93,9 @@ function photoMarkup() { return '<span class="photo-placeholder"><span>ADD PHOTO
 function buildBoard() {
   document.querySelector("#memberGrid").innerHTML = members.map((name, index) => `
     <button class="polaroid" type="button" data-member="${index}" style="--tilt:${tilts[index]}deg;--pin:${pins[index % pins.length]}">
-      ${photoMarkup()}<strong>${name}</strong>
+      ${photoMarkup()}<strong>${name}</strong><span class="gift-badge" hidden></span>
     </button>`).join("");
+  renderGiftBadges();
 }
 
 function drawThreads() {
@@ -192,6 +194,7 @@ function beginWishSequence() {
 }
 
 function showDossier() {
+  renderDossierGift();
   wishSequence.classList.add("show-dossier");
   document.querySelector("#skipWishRain").hidden = true;
 }
@@ -203,16 +206,43 @@ function closeWishSequence() {
   document.querySelector("#skipWishRain").hidden = false;
 }
 
-function loadGiftPool() {
+function loadGiftAssignments() {
   try {
-    const saved = JSON.parse(localStorage.getItem("12p2-gift-pool-v2"));
-    if (Array.isArray(saved) && saved.every(number => Number.isInteger(number) && number >= 1 && number <= 25)) return saved;
+    const saved = JSON.parse(localStorage.getItem("12p2-gift-assignments-v1"));
+    if (saved && typeof saved === "object" && !Array.isArray(saved)) {
+      const valid = Object.entries(saved).every(([memberIndex, number]) =>
+        Number.isInteger(Number(memberIndex)) && Number.isInteger(number) && number >= 1 && number <= 25
+      );
+      if (valid && new Set(Object.values(saved)).size === Object.values(saved).length) return saved;
+    }
   } catch (_) {}
-  return Array.from({ length: 25 }, (_, index) => index + 1);
+  return {};
 }
 
-function saveGiftPool() {
-  localStorage.setItem("12p2-gift-pool-v2", JSON.stringify(availableGifts));
+function deriveAvailableGifts() {
+  const assigned = new Set(Object.values(giftAssignments));
+  return Array.from({ length: 25 }, (_, index) => index + 1).filter(number => !assigned.has(number));
+}
+
+function saveGiftAssignments() {
+  localStorage.setItem("12p2-gift-assignments-v1", JSON.stringify(giftAssignments));
+}
+
+function renderGiftBadges() {
+  document.querySelectorAll(".polaroid").forEach((card, index) => {
+    const badge = card.querySelector(".gift-badge");
+    const assignedNumber = giftAssignments[index];
+    badge.hidden = !assignedNumber;
+    badge.textContent = assignedNumber ? `GIFT ${assignedNumber}` : "";
+    card.classList.toggle("has-gift", Boolean(assignedNumber));
+  });
+}
+
+function renderDossierGift() {
+  const tag = document.querySelector("#dossierGiftTag");
+  const assignedNumber = giftAssignments[currentMemberIndex];
+  tag.hidden = !assignedNumber;
+  tag.textContent = assignedNumber ? `GIFT NO. ${assignedNumber}` : "";
 }
 
 function wheelColors(count) {
@@ -225,7 +255,9 @@ function wheelColors(count) {
 }
 
 function renderWheel() {
+  availableGifts = deriveAvailableGifts();
   const count = availableGifts.length;
+  const assignedNumber = giftAssignments[currentMemberIndex];
   giftWheel.style.transition = "none";
   giftWheel.style.transform = "rotate(0deg)";
   wheelRotation = 0;
@@ -234,11 +266,15 @@ function renderWheel() {
     const angle = (index + .5) * 360 / count;
     return `<span style="--angle:${angle}deg">${number}</span>`;
   }).join("");
-  document.querySelector("#poolCount").textContent = count ? `${count} số quà còn lại` : "Tất cả phần quà đã được rút";
+  document.querySelector("#poolCount").textContent = assignedNumber
+    ? `Số ${assignedNumber} đã được lưu cho ${members[currentMemberIndex]}`
+    : count ? `${count} số quà còn lại` : "Tất cả phần quà đã được rút";
   const spinButton = document.querySelector("#spinWheel");
-  spinButton.disabled = count === 0;
-  spinButton.textContent = count === 0 ? "the wheel is empty" : "spin the wheel";
-  document.querySelector("#wheelResult").textContent = "";
+  spinButton.disabled = count === 0 || Boolean(assignedNumber);
+  spinButton.textContent = assignedNumber ? "number already drawn" : count === 0 ? "the wheel is empty" : "spin the wheel";
+  document.querySelector("#wheelResult").innerHTML = assignedNumber
+    ? `<small>YOUR GIFT NUMBER</small><strong>${assignedNumber}</strong>`
+    : "";
 }
 
 function secureRandomIndex(length) {
@@ -248,7 +284,7 @@ function secureRandomIndex(length) {
 }
 
 function spinGiftWheel() {
-  if (!availableGifts.length) return;
+  if (giftAssignments[currentMemberIndex] || !availableGifts.length) return;
   renderWheel();
   const button = document.querySelector("#spinWheel");
   button.disabled = true;
@@ -262,12 +298,15 @@ function spinGiftWheel() {
     giftWheel.style.transform = `rotate(${wheelRotation}deg)`;
   });
   setTimeout(() => {
-    availableGifts = availableGifts.filter(number => number !== selectedNumber);
-    saveGiftPool();
+    giftAssignments[currentMemberIndex] = selectedNumber;
+    availableGifts = deriveAvailableGifts();
+    saveGiftAssignments();
+    renderGiftBadges();
+    renderDossierGift();
     document.querySelector("#wheelResult").innerHTML = `<small>YOUR GIFT NUMBER</small><strong>${selectedNumber}</strong>`;
-    document.querySelector("#poolCount").textContent = `${availableGifts.length} số quà còn lại · số ${selectedNumber} đã được loại khỏi vòng quay`;
-    button.disabled = availableGifts.length === 0;
-    button.textContent = availableGifts.length ? "spin again" : "the wheel is empty";
+    document.querySelector("#poolCount").textContent = `Số ${selectedNumber} đã được lưu cho ${members[currentMemberIndex]} · ${availableGifts.length} số còn lại`;
+    button.disabled = true;
+    button.textContent = "number saved";
   }, 4950);
 }
 

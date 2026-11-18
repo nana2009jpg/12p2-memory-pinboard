@@ -23,4 +23,4 @@ Vercel uses `npm run build` and publishes `dist`.
 
 - Member: Lê Quang Minh
 - Challenge and content live in `app.js` while the content editor is still being designed.
-- The gift pool is stored in browser `localStorage`, so the official presentation wheel must run on one designated device.
+- Gift assignments are stored as a persistent member-to-number map in browser `localStorage`. Each member can draw once, and assigned numbers disappear from the remaining pool. The official presentation wheel must run on one designated device.
