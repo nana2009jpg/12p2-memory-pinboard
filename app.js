@@ -8,6 +8,11 @@ const members = [
 
 const tilts = [-3.1, 1.8, -1.2, 3.4, -2.2, 2.6, -2.8, .9, 2.1, -1.5, 1.3, -3.5, 2.9, -.7, -2.4, 3.1, -1.8, 1.1, -3, 2.3, -.9, 3.5, -2.5, 1.6, -1.3];
 const pins = ["#789bb8", "#d1a957", "#789bb8", "#b98973", "#d1a957"];
+const lqmWishes = [
+  "chúc sớm ngày thành bác sĩ tương lai, ko làm bệnh nhân thất vọng",
+  "Chúc lqm đi học đúng h",
+  "sớm đầu quân cho vượng vin, ngày lê quang minh làm bác sĩ sẽ là ngày tôi đi tập gym!"
+];
 const connections = [[0,1],[1,6],[2,7],[3,8],[4,9],[5,6],[6,12],[7,8],[7,13],[8,14],[9,14],[10,11],[11,16],[12,17],[13,18],[14,19],[15,16],[16,22],[17,18],[18,24],[19,24],[20,21],[21,22],[22,23],[23,24],[0,12],[4,12],[12,20],[12,24]];
 
 const intro = document.querySelector("#intro");
@@ -172,9 +177,9 @@ function clearSequenceTimers() {
 }
 
 function buildWishRain() {
-  const messages = ["abcdjfjf", "djidifj"];
+  const messages = lqmWishes;
   wishRain.innerHTML = Array.from({ length: 16 }, (_, index) => {
-    const text = index % 3 === 0 ? messages[index % 2] : index % 5 === 0 ? messages[(index + 1) % 2] : "";
+    const text = messages[index % messages.length];
     const left = 3 + ((index * 17) % 92);
     const delay = (index % 8) * .34;
     const duration = 4.8 + (index % 5) * .38;
