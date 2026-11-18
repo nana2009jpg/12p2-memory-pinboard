@@ -87,18 +87,17 @@
     </div>
   </dialog>
 
-  <section id="wishSequence" class="wish-sequence" hidden aria-label="Lời chúc dành cho Lê Quang Minh">
+  <section id="wishSequence" class="wish-sequence" hidden aria-label="Lời chúc">
     <button id="closeWishSequence" class="sequence-close" type="button">close</button>
     <button id="skipWishRain" class="sequence-skip" type="button">skip animation</button>
     <div id="wishRain" class="wish-rain" aria-hidden="true"></div>
     <div id="wishDossier" class="wish-dossier">
-      <div class="folder-back"><span>FILE 16 · LÊ QUANG MINH</span></div>
-      <article class="wish-sheet sheet-one"><small>MESSAGE 01</small><p>abcdjfjf</p></article>
-      <article class="wish-sheet sheet-two"><small>MESSAGE 02</small><p>djidifj</p></article>
+      <div class="folder-back"><span id="folderFileLabel"></span></div>
+      <div id="wishSheets" class="wish-sheets"></div>
       <div class="folder-front">
-        <span class="folder-label">LÊ QUANG MINH</span>
+        <span id="folderName" class="folder-label"></span>
         <strong id="dossierGiftTag" class="dossier-gift" hidden></strong>
-        <p>two little things kept for you</p>
+        <p id="folderSummary"></p>
       </div>
       <button id="openGiftWheel" class="open-wheel" type="button">draw a gift number <span>→</span></button>
     </div>
