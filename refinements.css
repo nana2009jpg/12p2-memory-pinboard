@@ -44,3 +44,20 @@ body{font-family:"Segoe UI Variable","Segoe UI",Arial,sans-serif}
 .photo-placeholder.has-photo:before,.photo-placeholder.has-photo:after{display:none}
 .photo-placeholder.has-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 .dialog-photo .photo-placeholder{aspect-ratio:.92}
+
+/* Square Polaroid portraits: compact on the board, with faces kept prominent. */
+.photo-placeholder,
+.photo-placeholder.has-photo{width:100%;height:auto;aspect-ratio:1 / 1}
+.photo-placeholder.has-photo img{object-position:center 28%}
+.dialog-photo{width:132px;padding:8px 8px 27px}
+.dialog-photo .photo-placeholder{aspect-ratio:1 / 1}
+
+@media(min-width:761px){
+  .polaroid{width:min(100%,calc((100vh - 258px)/5));height:max-content;align-self:center;justify-self:center;grid-template-rows:auto auto}
+  .photo-placeholder{height:auto;aspect-ratio:1 / 1}
+}
+
+@media(max-width:760px){
+  .polaroid{align-self:start}
+  .photo-placeholder{aspect-ratio:1 / 1}
+}
