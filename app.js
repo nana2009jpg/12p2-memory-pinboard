@@ -240,6 +240,7 @@ const memberData = {
 
 const tilts = [-3.1, 1.8, -1.2, 3.4, -2.2, 2.6, -2.8, .9, 2.1, -1.5, 1.3, -3.5, 2.9, -.7, -2.4, 3.1, -1.8, 1.1, -3, 2.3, -.9, 3.5, -2.5, 1.6, -1.3];
 const pins = ["#789bb8", "#d1a957", "#789bb8", "#b98973", "#d1a957"];
+const siteConfig = window.SITE_CONFIG || { memberPhotos: {}, music: "" };
 const connections = [[0,1],[1,6],[2,7],[3,8],[4,9],[5,6],[6,12],[7,8],[7,13],[8,14],[9,14],[10,11],[11,16],[12,17],[13,18],[14,19],[15,16],[16,22],[17,18],[18,24],[19,24],[20,21],[21,22],[22,23],[23,24],[0,12],[4,12],[12,20],[12,24]];
 
 const intro = document.querySelector("#intro");
@@ -255,7 +256,7 @@ let typingTimer, revealTimer, phraseIndex = 0, isTyping = false, hasTyped = fals
 let currentMemberIndex = -1;
 let enteredPin = "";
 let sequenceTimers = [];
-let giftAssignments = loadGiftAssignments();
+let giftAssignments = {};
 let availableGifts = deriveAvailableGifts();
 let wheelRotation = 0;
 
@@ -320,12 +321,18 @@ function replayIntro() {
   typeIntro();
 }
 
-function photoMarkup() { return '<span class="photo-placeholder"><span>ADD PHOTO</span></span>'; }
+function photoMarkup(index) {
+  const source = siteConfig.memberPhotos?.[index];
+  if (source) {
+    return `<span class="photo-placeholder has-photo"><img src="${escapeHtml(source)}" alt="Ảnh của ${escapeHtml(members[index])}"></span>`;
+  }
+  return '<span class="photo-placeholder"><span>ADD PHOTO</span></span>';
+}
 
 function buildBoard() {
   document.querySelector("#memberGrid").innerHTML = members.map((name, index) => `
     <button class="polaroid" type="button" data-member="${index}" style="--tilt:${tilts[index]}deg;--pin:${pins[index % pins.length]}">
-      ${photoMarkup()}<strong>${name}</strong><span class="gift-badge" hidden></span>
+      ${photoMarkup(index)}<strong>${name}</strong><span class="gift-badge" hidden></span>
     </button>`).join("");
   renderGiftBadges();
 }
@@ -352,7 +359,7 @@ function openMember(index) {
   const profile = memberData[index];
   const isReady = Boolean(profile?.question && profile?.pin);
   document.querySelector("#dialogName").textContent = members[index];
-  document.querySelector("#dialogAvatar").innerHTML = photoMarkup();
+  document.querySelector("#dialogAvatar").innerHTML = photoMarkup(index);
   document.querySelector("#dialogQuestion").textContent = isReady
     ? profile.question
     : "Câu hỏi và mật mã chưa được cập nhật trong sheet.";
@@ -416,7 +423,7 @@ function clearSequenceTimers() {
 function buildWishRain() {
   const messages = memberData[currentMemberIndex]?.wishes || [];
   wishRain.innerHTML = Array.from({ length: 16 }, (_, index) => {
-    const text = index % 3 === 0 ? messages[index % messages.length] : index % 5 === 0 ? messages[(index + 1) % messages.length] : "";
+    const text = messages[index % messages.length];
     const left = 3 + ((index * 17) % 92);
     const delay = (index % 8) * .34;
     const duration = 4.8 + (index % 5) * .38;
@@ -473,26 +480,52 @@ function closeWishSequence() {
   document.querySelector("#skipWishRain").hidden = false;
 }
 
-function loadGiftAssignments() {
-  try {
-    const saved = JSON.parse(localStorage.getItem("12p2-gift-assignments-v1"));
-    if (saved && typeof saved === "object" && !Array.isArray(saved)) {
-      const valid = Object.entries(saved).every(([memberIndex, number]) =>
-        Number.isInteger(Number(memberIndex)) && Number.isInteger(number) && number >= 1 && number <= 25
-      );
-      if (valid && new Set(Object.values(saved)).size === Object.values(saved).length) return saved;
-    }
-  } catch (_) {}
-  return {};
-}
-
 function deriveAvailableGifts() {
   const assigned = new Set(Object.values(giftAssignments));
   return Array.from({ length: 25 }, (_, index) => index + 1).filter(number => !assigned.has(number));
 }
 
 function saveGiftAssignments() {
-  localStorage.setItem("12p2-gift-assignments-v1", JSON.stringify(giftAssignments));
+  // Intentionally in memory only: a full browser reload starts a fresh draw.
+}
+
+function setupMusic() {
+  const audio = document.querySelector("#backgroundMusic");
+  const button = document.querySelector("#musicToggle");
+  const source = siteConfig.music;
+  if (!source) return;
+
+  let userPaused = false;
+  audio.src = source;
+  button.disabled = false;
+
+  const renderState = () => {
+    button.innerHTML = audio.paused
+      ? '<span>♪</span> play music'
+      : '<span>Ⅱ</span> pause music';
+    button.setAttribute("aria-label", audio.paused ? "Phát nhạc" : "Tạm dừng nhạc");
+  };
+  const play = () => {
+    if (userPaused || !audio.paused) return;
+    audio.play().then(renderState).catch(renderState);
+  };
+
+  button.addEventListener("click", () => {
+    if (audio.paused) {
+      userPaused = false;
+      audio.play().then(renderState).catch(renderState);
+    } else {
+      userPaused = true;
+      audio.pause();
+      renderState();
+    }
+  });
+  audio.addEventListener("play", renderState);
+  audio.addEventListener("pause", renderState);
+  renderState();
+  play();
+  document.addEventListener("pointerdown", play, { once: true, capture: true });
+  document.addEventListener("keydown", play, { once: true, capture: true });
 }
 
 function renderGiftBadges() {
@@ -609,4 +642,5 @@ document.addEventListener("keydown", e => {
 window.addEventListener("resize", () => requestAnimationFrame(drawThreads));
 
 buildBoard();
+setupMusic();
 typeIntro();

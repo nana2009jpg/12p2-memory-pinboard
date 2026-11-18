@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="editor-token" content="__EDITOR_TOKEN__">
+  <title>Class Memory Editor</title>
+  <link rel="stylesheet" href="/editor/styles.css">
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">12 PHYS 2 · LOCAL CONTROL ROOM</p>
+      <h1>Class Memory Editor</h1>
+      <p class="lede">Thêm ảnh, chọn nhạc, xem trước rồi deploy bằng Git đang có trên máy.</p>
+    </div>
+    <div class="header-actions">
+      <a href="/preview/">Mở preview</a>
+      <button id="deployButton" type="button">Deploy website</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="music-panel">
+      <div>
+        <p class="section-number">01 · BACKGROUND MUSIC</p>
+        <h2>Nhạc nền</h2>
+        <p>MP3, WAV, M4A, OGG hoặc AAC · tối đa 60 MB.</p>
+      </div>
+      <label class="file-button">Chọn file nhạc<input id="musicInput" type="file" accept="audio/mpeg,audio/wav,audio/mp4,audio/ogg,audio/aac"></label>
+      <audio id="musicPreview" controls></audio>
+      <span id="musicStatus" class="status">Chưa tải nhạc</span>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <div><p class="section-number">02 · MEMBER PHOTOS</p><h2>Ảnh hồ sơ</h2></div>
+        <p>Ảnh sẽ được crop theo khung polaroid; file gốc không bị chỉnh sửa.</p>
+      </div>
+      <div id="memberGrid" class="member-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/editor/app.js"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const output = join(root, "dist");
-const sourceFiles = ["index.html", "styles.css", "refinements.css", "app.js", "favicon.svg"];
+const sourceFiles = ["index.html", "styles.css", "refinements.css", "site-config.js", "app.js", "favicon.svg"];
 
 if (relative(root, output) !== "dist") throw new Error("Unsafe output directory");
 await rm(output, { recursive: true, force: true });

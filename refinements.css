@@ -33,3 +33,14 @@
 
 /* Permanent member-to-gift assignment */
 .gift-badge{position:absolute;z-index:7;right:-8px;bottom:24px;padding:5px 8px;border:1px solid rgba(110,81,39,.23);background:#e2bd68;color:#624d2c;font-family:"Segoe UI Variable","Segoe UI",Arial,sans-serif;font-size:7px;font-weight:700;letter-spacing:.12em;box-shadow:0 6px 13px rgba(64,48,26,.2);transform:rotate(-4deg)}.gift-badge[hidden]{display:none}.polaroid.has-gift{box-shadow:0 13px 23px rgba(68,50,29,.2),0 0 0 2px rgba(207,166,81,.34)}.dossier-gift{position:relative;z-index:2;display:inline-block;margin-left:8px;padding:7px 12px;border:1px solid rgba(104,77,40,.2);background:#6f90aa;color:#fffaf0;font-family:"Segoe UI Variable","Segoe UI",Arial,sans-serif;font-size:9px;letter-spacing:.13em;box-shadow:0 5px 12px rgba(74,64,48,.14);transform:rotate(2deg)}.dossier-gift[hidden]{display:none}@media(min-width:761px){.gift-badge{right:-5px;bottom:16px;padding:3px 5px;font-size:5px}}@media(max-width:640px){.gift-badge{right:-5px;bottom:28px;font-size:6px}.dossier-gift{display:block;width:max-content;margin:8px 0 0}}
+
+/* Vietnamese-safe copy and uploaded media */
+body{font-family:"Segoe UI Variable","Segoe UI",Arial,sans-serif}
+.wish-rain i span,.wish-sheets .wish-sheet p,.wish-sheet p,.folder-front p{font-family:"Segoe UI Variable","Segoe UI",Arial,sans-serif;font-weight:390;letter-spacing:-.012em;word-spacing:0}
+.wish-rain i span{font-size:clamp(11px,1vw,15px);line-height:1.35}
+.wish-sheets .wish-sheet p{font-size:clamp(12px,1.2vw,16px);line-height:1.4}
+.wish-sheets .wish-sheet.is-long p{font-size:clamp(10px,.95vw,13px)}
+.photo-placeholder.has-photo{background:#dce4e8}
+.photo-placeholder.has-photo:before,.photo-placeholder.has-photo:after{display:none}
+.photo-placeholder.has-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.dialog-photo .photo-placeholder{aspect-ratio:.92}

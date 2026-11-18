@@ -8,6 +8,18 @@ Static class presentation site with 25 polaroid profiles, four-digit memory chal
 npm run dev
 ```
 
+## Local media editor
+
+Run the editor on the same computer that has the GitHub credentials for this repository:
+
+```bash
+npm run editor
+```
+
+Open `http://127.0.0.1:4190/`. The editor can upload a photo for each member, upload one background audio file, open a live preview, then build, commit, rebase and push to `main`. It binds only to localhost and uses a random per-process token for write and deploy requests. Keep the terminal window open while using it.
+
+Browsers may block audible autoplay until the first tap or key press. The public site attempts autoplay on load and retries on the first interaction.
+
 Open `http://127.0.0.1:5188`.
 
 ## Production build
