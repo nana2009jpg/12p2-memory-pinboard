@@ -1,4 +1,30 @@
 window.SITE_CONFIG = {
-  "memberPhotos": {},
-  "music": ""
+  "memberPhotos": {
+    "0": "./assets/photos/member-01.jpg",
+    "1": "./assets/photos/member-02.jpg",
+    "2": "./assets/photos/member-03.jpg",
+    "3": "./assets/photos/member-04.jpg",
+    "4": "./assets/photos/member-05.jpg",
+    "5": "./assets/photos/member-06.jpg",
+    "6": "./assets/photos/member-07.jpg",
+    "7": "./assets/photos/member-08.jpg",
+    "8": "./assets/photos/member-09.jpg",
+    "9": "./assets/photos/member-10.jpg",
+    "10": "./assets/photos/member-11.jpg",
+    "11": "./assets/photos/member-12.jpg",
+    "12": "./assets/photos/member-13.jpg",
+    "13": "./assets/photos/member-14.jpg",
+    "14": "./assets/photos/member-15.jpg",
+    "15": "./assets/photos/member-16.jpg",
+    "16": "./assets/photos/member-17.png",
+    "17": "./assets/photos/member-18.jpg",
+    "18": "./assets/photos/member-19.jpg",
+    "19": "./assets/photos/member-20.jpg",
+    "20": "./assets/photos/member-21.jpg",
+    "21": "./assets/photos/member-22.jpg",
+    "22": "./assets/photos/member-23.jpg",
+    "23": "./assets/photos/member-24.png",
+    "24": "./assets/photos/member-25.jpg"
+  },
+  "music": "./assets/music/background.mp3"
 };
