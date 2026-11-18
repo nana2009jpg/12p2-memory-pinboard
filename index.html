@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#d8cfbd" />
+  <meta name="description" content="12 Phys 2 Girls' Present — twenty-five memories, questions and little surprises." />
+  <meta property="og:title" content="12 Phys 2 Girls' Present" />
+  <meta property="og:description" content="Twenty-five pieces of us." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <title>12 Phys 2 Girls' Present</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./refinements.css" />
+</head>
+<body>
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <section id="intro" class="intro" aria-label="Intro">
+    <div class="light-leak" aria-hidden="true"></div>
+    <div class="intro-collage" aria-hidden="true">
+      <i class="ghost-photo ghost-one"></i>
+      <i class="ghost-photo ghost-two"></i>
+      <i class="ghost-photo ghost-three"></i>
+      <i class="ghost-photo ghost-four"></i>
+      <i class="intro-pin pin-one"></i>
+      <i class="intro-pin pin-two"></i>
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M8,78 C25,52 31,28 51,48 S78,78 94,19" />
+        <path d="M2,24 C30,31 60,12 91,68" />
+      </svg>
+    </div>
+    <span class="frame-corner top-left" aria-hidden="true"></span>
+    <span class="frame-corner top-right" aria-hidden="true"></span>
+    <span class="frame-corner bottom-left" aria-hidden="true"></span>
+    <span class="frame-corner bottom-right" aria-hidden="true"></span>
+    <button id="skipIntro" class="skip" type="button">skip</button>
+    <h1 id="introLine">guess what it is?</h1>
+    <div class="focus-frame" aria-hidden="true"></div>
+  </section>
+
+  <main id="boardPage" class="board-page" aria-hidden="true">
+    <header class="board-header">
+      <div class="title-paper">
+        <span class="paper-clip" aria-hidden="true"></span>
+        <p>12 phys 2 · class pinboard</p>
+        <h1>Twenty-five pieces of us.</h1>
+      </div>
+      <div class="header-note"><span>25 people</span><span>25 little secrets</span><span>one story</span></div>
+      <div class="header-actions">
+        <button id="replayIntro" type="button">replay intro</button>
+        <button id="musicToggle" type="button" aria-label="Phát nhạc" disabled><span>♪</span> add the song later</button>
+      </div>
+    </header>
+
+    <section class="board-shell" aria-label="Bảng ký ức của lớp">
+      <div class="board-caption">
+        <span>pinboard · 2026</span>
+        <p>Chạm vào một tấm ảnh. Có những điều chỉ hiện ra khi ta biết đúng mật mã.</p>
+      </div>
+      <div id="detectiveBoard" class="detective-board">
+        <svg id="threads" class="threads" aria-hidden="true"></svg>
+        <div id="memberGrid" class="member-grid"></div>
+        <div class="loose-note note-one" aria-hidden="true">we were here.</div>
+        <div class="loose-note note-two" aria-hidden="true">don’t lose this.</div>
+        <div class="blue-flower" aria-hidden="true">✦</div>
+      </div>
+    </section>
+
+    <footer><span>made of small moments</span><i></i><span>kept on purpose</span></footer>
+  </main>
+
+  <dialog id="capsuleDialog" class="capsule-dialog">
+    <div class="dialog-tape" aria-hidden="true"></div>
+    <button id="closeDialog" class="dialog-close" type="button" aria-label="Đóng">×</button>
+    <div id="dialogAvatar" class="dialog-photo"></div>
+    <p class="dialog-label">a question for you</p>
+    <h2 id="dialogName"></h2>
+    <p id="dialogQuestion" class="dialog-question">Câu hỏi của người này sẽ xuất hiện ở đây.</p>
+    <div id="pinPreview" class="pin-preview" aria-label="Mã số gồm bốn chữ số"><span>—</span><span>—</span><span>—</span><span>—</span></div>
+    <p id="pinFeedback" class="pin-feedback" aria-live="polite"></p>
+    <div id="pinKeypad" class="pin-keypad" aria-label="Bàn phím nhập mã">
+      <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button>
+      <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button>
+      <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button>
+      <button type="button" data-key="clear" aria-label="Xóa">⌫</button><button type="button" data-key="0">0</button><button type="button" data-key="enter" aria-label="Xác nhận">↵</button>
+    </div>
+  </dialog>
+
+  <section id="wishSequence" class="wish-sequence" hidden aria-label="Lời chúc dành cho Lê Quang Minh">
+    <button id="closeWishSequence" class="sequence-close" type="button">close</button>
+    <button id="skipWishRain" class="sequence-skip" type="button">skip animation</button>
+    <div id="wishRain" class="wish-rain" aria-hidden="true"></div>
+    <div id="wishDossier" class="wish-dossier">
+      <div class="folder-back"><span>FILE 16 · LÊ QUANG MINH</span></div>
+      <article class="wish-sheet sheet-one"><small>MESSAGE 01</small><p>abcdjfjf</p></article>
+      <article class="wish-sheet sheet-two"><small>MESSAGE 02</small><p>djidifj</p></article>
+      <div class="folder-front">
+        <span class="folder-label">LÊ QUANG MINH</span>
+        <p>two little things kept for you</p>
+      </div>
+      <button id="openGiftWheel" class="open-wheel" type="button">draw a gift number <span>→</span></button>
+    </div>
+  </section>
+
+  <dialog id="wheelDialog" class="wheel-dialog">
+    <button id="closeWheel" class="dialog-close" type="button" aria-label="Đóng">×</button>
+    <p class="dialog-label">the gift draw</p>
+    <h2>Một con số đang chờ.</h2>
+    <div class="wheel-stage">
+      <div class="wheel-pointer" aria-hidden="true"></div>
+      <div id="giftWheel" class="gift-wheel"></div>
+      <div class="wheel-hub">12P2</div>
+    </div>
+    <div id="wheelResult" class="wheel-result" aria-live="polite"></div>
+    <p id="poolCount" class="pool-count"></p>
+    <button id="spinWheel" class="spin-wheel" type="button">spin the wheel</button>
+  </dialog>
+
+  <script src="./app.js"></script>
+</body>
+</html>
